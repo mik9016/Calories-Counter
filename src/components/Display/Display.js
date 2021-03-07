@@ -1,62 +1,38 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
-import {Card, Row, Col, Container, CardGroup, CardImg} from 'react-bootstrap';
-require('dotenv').config()
+import React from "react";
+import classes from "../Display/Display.module.scss";
 
+import { Card, Row, Container,Col} from "react-bootstrap";
 
-
-export default function Display() {
-const [calories, setCalories] = useState('0');
-
-
-
-const URL = `https://api.edamam.com/api/nutrition-details?app_id=${APPID}&app_key=${APPKEY}`
-
-    useEffect(() => {
-        axios.post(URL,{
-            "title": "Fresh Ham Roasted With Rye Bread and Dried Fruit Stuffing",
-            "prep": "1. Have your butcher bone and butterfly the ham and score the fat in a diamond pattern. ...",
-            "yield": "About 15 servings",
-            "ingr": [
-              "1 fresh ham, about 18 pounds, prepared by your butcher (See Step 1)",
-              "7 cloves garlic, minced",
-              "1 tablespoon caraway seeds, crushed",
-              "4 teaspoons salt",
-              "Freshly ground pepper to taste",
-              "1 teaspoon olive oil",
-              "1 medium onion, peeled and chopped",
-              "3 cups sourdough rye bread, cut into 1/2-inch cubes",
-              "1 1/4 cups coarsely chopped pitted prunes",
-              "1 1/4 cups coarsely chopped dried apricots",
-              "1 large tart apple, peeled, cored and cut into 1/2-inch cubes",
-              "2 teaspoons chopped fresh rosemary",
-              "1 egg, lightly beaten",
-              "1 cup chicken broth, homemade or low-sodium canned"
-            ]
-          }).then((res)=>{
-            setCalories(res.data.calories)
-        })
-        // return () => {
-          
-        // }
-    }, [])
-    return (
-        <div >
-            <h3>Display results of fetching</h3>
-            <Container>
-                <Card >
-                    <CardGroup className="text-center">
-                        <Card.Title> Your meal:</Card.Title>
-                        <Card.Body>
-                            <Card.Text>{calories}</Card.Text>
-                        </Card.Body>
-                        
-                        
-                    </CardGroup>
-                </Card>
-            </Container>
-
-        
-        </div>
-    )
+export default function Display(props) {
+  return (
+    <div className={classes.Display}>
+      <Container>
+        <Card className="shadow">
+          <Card.Title>Ingredient:</Card.Title>
+          <Card.Body>
+            <Card.Text>
+              <Row>
+                <Col>
+                <h6>{props.quantity}</h6>
+                </Col>
+                <Col>
+                <h6>{props.unit}</h6>
+                </Col>
+                <Col>
+                <h6>{props.item}</h6>
+                </Col>
+                
+              </Row>
+            
+              <h6>Calories: {props.calories}</h6>
+              <p>Protein: {props.protein} g</p>
+              <p>Fat: {props.fat} g</p>
+              <p>Carbs: {props.carbs} g</p>
+              <p>Sugar: {props.sugar} g</p>
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      </Container>
+    </div>
+  );
 }
